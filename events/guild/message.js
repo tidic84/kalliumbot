@@ -8,12 +8,13 @@ module.exports = (Discord, client, message) => {
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
 
-    const command = client .commands.get(cmd);
+    const command = client .commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
+
 
     if(command) {
 
         try {
-            command.execute(client, message, args, Discord);
+            command.execute(client, message, args, cmd,  Discord);
         } catch (error) {
             console.error(error);
             const embed = new MessageEmbed()
