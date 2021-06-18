@@ -14,4 +14,4 @@ client.once('ready', () => {
     client.user.setActivity('Kallium', { type: 'WATCHING', url:  'https://twitch.tv/'});
 });
 
-client.login(procces.env.TOKEN);
+client.login(process.env.TOKEN);
