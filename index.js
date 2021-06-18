@@ -10,4 +10,8 @@ client.events = new Discord.Collection();
     require(`./handlers/${handler}`)(client, Discord);
 })
 
+client.once('ready', () => {
+    client.user.setActivity('Kallium', { type: 'WATCHING', url:  'https://twitch.tv/'});
+});
+
 client.login(token);

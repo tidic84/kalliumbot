@@ -2,8 +2,9 @@ const { MessageEmbed } = require('discord.js');
 const { blue, green, yellow, red } = require('./colors.json')
 
 module.exports = {
-    name: 'pp',
-    description: 'Afficher pp',
+    name: 'avatar',
+    description: 'Afficher avatar',
+    aliases: [ 'pp' ],
     
     execute(client, message) {
         if (!message.mentions.users.size) {

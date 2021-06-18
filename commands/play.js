@@ -23,8 +23,7 @@ module.exports = {
         const server_queue = queue.get(message.guild.id);
 
 
-        if(cmd == 'play' || 'pl') {
-
+        if(cmd == 'play' || cmd == 'pl') {
             if(args == 0){
                 const embed = new MessageEmbed(receivedEmbed)
                     .setTitle(`Erreur`)
@@ -62,40 +61,7 @@ module.exports = {
                     .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
                 message.channel.send(embed);
                 const connection = await message.member.voice.channel.join();
-
-            //     const dispatcher = connection.play(ytdl(args[0]), {
-            //         volume: 0.5,
-
-            // });
-
-            // // Event Start
-            // dispatcher.on("start", () => {
-            //     message.client.user.setActivity("Youtube", {type: "LISTENING"})
-            //     const embed = new MessageEmbed()
-            //         .setAuthor(`Lecture`)
-            //         .setTitle(`${song.title}`)
-            //         .setURL(`${song.url}`)
-            //         .setColor(`${green}`)
-            //         .setDescription(`:white_check_mark: Lecture de la vidéo`)
-            //         .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
-            //     message.channel.send(embed);
-            // })
-
-            // // Event Error
-            // dispatcher.on("error", () => {
-            //     const embed = new MessageEmbed(receivedEmbed)
-            //         .setTitle(`Erreur`)
-            //         .setColor(`${red}`)
-            //         .setDescription(`:x: La vidéo est introuvable ou le lien est invalide`)
-            //     message.channel.send(embed);
-            //     message.member.voice.channel.leave();
-            //  })
-
-            // // Event Finish
-            // dispatcher.on("finish", () => {
-            //     message.member.voice.channel.leave();
-            // })
-
+                
             } else {
                 const video_finder = async (query) => {
                     const embed1 = new MessageEmbed()
@@ -168,8 +134,8 @@ module.exports = {
         }
 
         else if(cmd == 'stop') stop_song(message, server_queue);
-        else if(cmd == 'skip' || 'sk') skip_song(message, server_queue);
-        else if(cmd == 'queue' || 'list') queue_list(message, server_queue);
+        else if(cmd == 'skip' || cmd == 'sk') skip_song(message, server_queue);
+        else if(cmd == 'queue' || cmd == 'list') queue_list(message, server_queue);
 
 
     }
@@ -242,7 +208,6 @@ const queue_list = (message) => {
     }
     msgSend = `${msg}`
     msgSend = msgSend.replace(",", "")
-    //.replace(",", "")
     const embed = new MessageEmbed()
         .setTitle(`Liste d'attente`)
         .setColor(`${blue}`)

@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { blue, green, yellow, red } = require('./colors.json')
-const helpCommands = [ 'ban', 'kick', 'clear', 'play', 'pp'];
+const helpCommands = [ 'kick', 'ban', 'help', 'clear', 'play', 'skip', 'stop', 'queue', 'avatar'];
 
 module.exports = {
     name: 'help',
@@ -17,18 +17,18 @@ module.exports = {
             ・\`ban <@joueur> <raison>\`: Sert a bannir définitivement un joueur du serveur.
             
             __**Utilitaires**__
-            ・\`server\`: Sert a afficher les informations du serveur.
-            ・\`help\`: Sert a afficher la liste des commandes.
+            ・\`server\`: Afficher les informations du serveur.
+            ・\`help\`: Afficher la liste des commandes.
             ・\`clear <nombre entre 0 et 100>\`: Sert a supprimer des messages.
 
             __**Musique**__
             ・\`play <lien / nom de vidéo>\` Sert a jouer une musique dans un salon vocal.
-            ・\`skip\` Sert a sauter une musique.
-            ・\`stop\` Sert a arrêter la musique.
-            ・\`queue\` Bientot, ou pas
+            ・\`skip\` Saute une musique.
+            ・\`stop\` Arrête la musique.
+            ・\`queue\` Affiche la liste d'attente des musiques
 
             **__Autre__**
-            ・\`pp <@joueur>\` Sert a obtenir sa pp ou celle d'un ou plusieurs joueur(s).`)
+            ・\`avatar <@joueur>\` Sert a obtenir sa pp ou celle d'un ou plusieurs joueur(s).`)
             .setFooter("Pour plus de détails sur une commande: help <commande>")
         message.channel.send(embed);
         
@@ -91,22 +91,75 @@ module.exports = {
                             ・play | <lien / nom vidéo>
                             
                             Pour faire fonctionner cette commande, il faut fournir un lien youtube ou le nom d'une vidéo youtube.
+
+                            ・Alias: \`pl\`
+                            `)
+                            .setFooter("Pour plus de détails sur une commande: help <commande>")
+                        message.channel.send(embed1);
+                        
+                        }
+                    if(args[0] == 'skip') {
+                        const embed1 = new MessageEmbed()
+                            .setTitle('Help - Skip')
+                            .setColor(`${blue}`)
+                            .setDescription(`__**Skip**__
+    
+                            ・skip
+                            
+                            Cette commande saute une musique.
+
+                            ・Alias: \`sk\`
+                            `)
+                            .setFooter("Pour plus de détails sur une commande: help <commande>")
+                        message.channel.send(embed1);
+                        
+                        }
+
+                        if(args[0] == 'stop') {
+                            const embed1 = new MessageEmbed()
+                                .setTitle('Help - Stop')
+                                .setColor(`${blue}`)
+                                .setDescription(`__**Stop**__
+        
+                                ・stop
+                                
+                                Cette commande arrete la/les musique(s).
+    
+                                `)
+                                .setFooter("Pour plus de détails sur une commande: help <commande>")
+                            message.channel.send(embed1);
+                            
+                            }
+                        
+                        if(args[0] == 'queue') {
+                        const embed1 = new MessageEmbed()
+                            .setTitle('Help - Queue')
+                            .setColor(`${blue}`)
+                            .setDescription(`__**Queue**__
+    
+                            ・queue
+                            
+                            Cette commande saute une musique.
+
+                            ・Alias: \`list\`
                             `)
                             .setFooter("Pour plus de détails sur une commande: help <commande>")
                         message.channel.send(embed1);
                         
                         }
                     
-                    if(args[0] == 'pp') {
+                    if(args[0] == 'avatar') {
                     const embed1 = new MessageEmbed()
-                        .setTitle('Help - PP')
+                        .setTitle('Help - Avatar')
                         .setColor(`${blue}`)
-                        .setDescription(`__**PP**__
+                        .setDescription(`__**avatar**__
 
-                        ・pp | <@joueur>
+                        ・avatar | <@joueur>
                         
-                        La mention du joueur est facultative, si personne n'est mentionné, c'est la pp de l'auteur de la commmande qui sera envoyé?
+                        La mention du joueur est facultative, si personne n'est mentionné, c'est l'avatar de l'auteur de la commmande qui sera envoyé.
                         Une ou plusieurs mentions peuvent être mise.
+                        
+                        ・Alias: \`pp\`
                         `)
                         .setFooter("Pour plus de détails sur une commande: help <commande>")
                     message.channel.send(embed1);
@@ -118,9 +171,9 @@ module.exports = {
                     fail++
                     if (fail - 1 == helpCommands.length) {
                             const embed = new MessageEmbed()
-                                .setTitle('Erreur')
-                                .setColor(`${red}`)
-                                .setDescription(`:x: Cette commande n'a pas plus de détails !`)
+                                .setTitle('Inexistante')
+                                .setColor(`${blue}`)
+                                .setDescription(`:x: Cette commande est inexistante ou n'a pas plus de détails !`)
                                 .setFooter("Pour plus de détails sur une commande: help <commande>")
                             return message.channel.send(embed);
                     }
