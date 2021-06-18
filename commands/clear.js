@@ -2,7 +2,7 @@ module.exports = {
     name: 'clear',
     description: 'clear messages',
     
-    execute(message, args) {
+    execute(client, message, args) {
         const ammount = parseInt(args[0]);
 
         if (isNaN(ammount)) {

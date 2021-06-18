@@ -5,7 +5,7 @@ module.exports = {
     name: 'help',
     description: 'Affiche la liste des commandes',
     
-    execute(message) {
+    execute(client, message) {
         const embed = new MessageEmbed()
             .setTitle('Liste des commandes')
             .setColor(`${blue}`)

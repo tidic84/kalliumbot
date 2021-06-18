@@ -5,7 +5,7 @@ module.exports = {
     name: 'server',
     description: 'Afficher les détails du serveur',
     
-    execute(message) {
+    execute(client, message) {
         const embed = new MessageEmbed()
                 .setTitle(`${message.guild.name}`)
                 .setColor(`${blue}`)

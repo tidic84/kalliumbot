@@ -7,7 +7,7 @@ module.exports = {
     name: 'template',
     description: 'template',
     
-    execute(message) {
+    execute(client, message) {
         message.channel.send('template')
     }
 };

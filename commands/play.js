@@ -1,15 +1,12 @@
+const { blue, green, yellow, red } = require(`./colors.json`)
 const { MessageEmbed } = require('discord.js');
-var path = require('path');
-var appDir = path.dirname(require.main.filename);
-
-const { blue, green, yellow, red } = require(`${appDir}/commands/colors.json`)
 
 module.exports = {
     name: 'play',
-    aliases: ['skip', 'stop'],
+    aliases: ['stop', 'skip'],
     description: 'Jouer de la musique',
     
-    async execute(message, args) {
+    async execute(client, message, args) {
         if(!message.guild)return;
         const receivedEmbed = message.embeds[0];
 
@@ -23,7 +20,7 @@ module.exports = {
 
         if(message.member.voice.channel) {
             const embed = new MessageEmbed(receivedEmbed)
-                .setTitle(`Attente`)
+                .setTitle(`Chargement`)
                 .setColor(`${yellow}`)
                 .setDescription(`:arrows_counterclockwise: Chargement de la vidéo`)
             message.channel.send(embed);

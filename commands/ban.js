@@ -5,7 +5,7 @@ module.exports = {
     name: 'ban',
     description: 'Sert a bannir des joueurs du serveur',
     
-    async execute(message, args) {
+    async execute(client, message, args) {
         if(!message.member.hasPermission('BAN_MEMBERS')) {
             const embed = new MessageEmbed()
                 .setTitle(`Erreur`)

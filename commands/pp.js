@@ -5,7 +5,7 @@ module.exports = {
     name: 'pp',
     description: 'Afficher pp',
     
-    execute(message) {
+    execute(client, message) {
         if (!message.mentions.users.size) {
             const embed = new MessageEmbed()
                 .setTitle(`${message.author.username}`)

@@ -5,7 +5,7 @@ module.exports = {
     name: 'ping',
     description: 'test bot',
     
-    execute(message) {
+    execute(client, message) {
         const embed = new MessageEmbed()
             .setTitle('Pong !')
             .setColor(`${blue}`)

@@ -5,7 +5,7 @@ module.exports = {
     name: 'kick',
     description: 'Sert a expulser des joueurs du serveur',
     
-    async execute(message, args) {
+    async execute(client, message, args) {
         if(!message.member.hasPermission('KICK_MEMBERS')) {
             const embed = new MessageEmbed()
                 .setTitle(`Erreur`)
