@@ -25,7 +25,7 @@ module.exports = (Discord, client, message) => {
                     .setDescription(`:x: La commande n'a pas pu s'exécuter !`)
                     .setFooter(`${error}`)
             message.channel.send(embed);
-    }
+        }
     
     }
 }
