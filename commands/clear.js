@@ -8,8 +8,8 @@ module.exports = {
         if (isNaN(ammount)) {
             return message.reply("ce n'est pas un nombre valide !");
         }
-        else if (ammount < 1 || ammount > 256) {
-            return message.reply("Le nombre doit être superieur a **0** et inferieur ou égal a **256**")
+        else if (ammount < 1 || ammount > 100) {
+            return message.reply("Le nombre doit être superieur a **0** et inferieur ou égal a **100**")
         } 
 
         message.channel.bulkDelete(ammount + 1)
