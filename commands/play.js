@@ -4,12 +4,13 @@ const ytdl = require("ytdl-core");
 const ytSearch = require('yt-search');
 const message = require('../events/guild/message');
 const queue = new Map();
+var loop = false;
 
-const list = [];
+var list = [];
 
 module.exports = {
     name: 'play',
-    aliases: ['pl', 'stop', 'skip', 'sk', 'queue', 'list'],
+    aliases: ['pl', 'stop', 'skip', 'sk', 'queue', 'list', 'loop'],
     description: 'Jouer de la musique',
 
     
@@ -136,6 +137,7 @@ module.exports = {
         else if(cmd == 'stop') stop_song(message, server_queue);
         else if(cmd == 'skip' || cmd == 'sk') skip_song(message, server_queue);
         else if(cmd == 'queue' || cmd == 'list') queue_list(message, server_queue);
+        else if(cmd == 'loop') loop_song(message);
 
 
     }
@@ -155,12 +157,17 @@ const video_player = async (guild, song) => {
 
     song_queue.connection.play(stream, { seek: 0, volume: 0.5})
         .on('finish',() => {
-            list.shift();
+            if(!loop){
+                list.shift();
             song_queue.songs.shift();
             video_player(guild, song_queue.songs[0]);
+            } else {
+                video_player(guild, song_queue.songs[0]);
+            }
         });
 
-    const embed = new MessageEmbed()
+        if (!loop) { 
+        const embed = new MessageEmbed()
         .setAuthor(`Lecture`)
         .setTitle(`${song.title}`)
         .setURL(`${song.url}`)
@@ -168,6 +175,7 @@ const video_player = async (guild, song) => {
         .setDescription(`:white_check_mark: Lecture de la vidéo`)
         .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
     await song_queue.text_channel.send(embed);
+    }
 }
 
 const skip_song = (message, server_queue) => {
@@ -186,19 +194,40 @@ const skip_song = (message, server_queue) => {
 }
 
 const stop_song = (message, server_queue) => {
-    if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
+
+    if (!message.member.voice.channel) {
+        const embed = new MessageEmbed()
+            .setTitle(`Erreur`)
+            .setColor(`${red}`)
+            .setDescription(`:x: Vous devez etre dans un salon vocal !`)
+        return message.channel.send(embed);
+    }
+    
+    if(!server_queue) {
+        const embed = new MessageEmbed()
+            .setTitle(`Erreur`)
+            .setColor(`${red}`)
+            .setDescription(`:x: Il n'y a pas de musique a arreter !`)
+        return message.channel.send(embed);
+    }
     
     server_queue.songs = [];
+    list = [];
     server_queue.connection.dispatcher.end();
+
+    if(loop)loop_song(message);
 
     const embed = new MessageEmbed()
         .setTitle(`Arrêt`)
         .setColor(`${blue}`)
         .setDescription(`:white_check_mark: Vous avez arrété la musique`)
-        message.channel.send(embed);
+    message.channel.send(embed);
+
+
 }
 
 const queue_list = (message) => {
+    loopStatus = "désactivé";
     msg = [];
     msgSend = "";
     for( i = 0; i < list.length; i++) {
@@ -206,12 +235,35 @@ const queue_list = (message) => {
         msg.push(`${i+1} - ${list[i]}\n`)
     
     }
+    if(loop){
+        loopStatus = "activé";
+    }
     msgSend = `${msg}`
-    msgSend = msgSend.replace(",", "")
+    msgSend = msgSend.replace(",", "");
+    msgSend = msgSend.replace(",", "");
     const embed = new MessageEmbed()
         .setTitle(`Liste d'attente`)
         .setColor(`${blue}`)
         .setDescription(`${msgSend}`)
+        .setFooter(`La boucle est ${loopStatus}`)
     message.channel.send(embed);
     
+}
+
+const loop_song = (message) => {
+    if(!loop) {
+        loop = true;
+        const embed = new MessageEmbed()
+            .setTitle(`Boucle activé`)
+            .setColor(`${green}`)
+            .setDescription(`:white_check_mark: Vous avez activé la boucle`)
+        message.channel.send(embed);
+    } else {
+        loop = false;
+        const embed = new MessageEmbed()
+            .setTitle(`Boucle désactivé`)
+            .setColor(`${green}`)
+            .setDescription(`:white_check_mark: Vous avez désactivé la boucle`)
+        message.channel.send(embed);
+    }
 }
