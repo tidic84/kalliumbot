@@ -11,8 +11,6 @@
   "dependencies": {
     "@discordjs/opus": "^0.5.3",
     "discord.js": "^12.5.3",
-    "discord.js-commando": "github:discordjs/Commando",
-    "discord.py": "^1.0.0",
     "emojis": "^1.0.10",
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.3.0",
