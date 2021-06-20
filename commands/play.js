@@ -218,7 +218,16 @@ const stop_song = (message, server_queue) => {
     
     server_queue.songs = [];
     list = [];
-    server_queue.connection.dispatcher.end();
+    try {
+        server_queue.connection.dispatcher.end();
+    } catch (error) { 
+        const embed = new MessageEmbed()
+            .setTitle(`Erreur`)
+            .setColor(`${red}`)
+            .setDescription(`:x: La musique n'a pas pu s'arreter`)
+            .setFooter(`${error}`)
+        return message.channel.send(embed);
+    }
 
     if(loop)loop_song(message);
 
