@@ -8,6 +8,9 @@ module.exports = {
     description: 'template',
     
     execute(client, message) {
-        message.channel.send('template')
+        const embed = new MessageEmbed()
+            .setTitle('Pong !')
+            .setColor(`${blue}`)
+        message.channel.send(embed);
     }
 };

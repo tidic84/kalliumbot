@@ -1,8 +1,15 @@
+
+const { MessageEmbed } = require('discord.js');
+const Discord = require('discord.js');
+const client = new Discord.Client()
+const { blue, green, yellow, red } = require('./colors.json')
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 module.exports = {
     name: 'clear',
     description: 'clear messages',
     
-    execute(client, message, args) {
+    async execute(client, message, args) {
         const ammount = parseInt(args[0]);
 
         if (isNaN(ammount)) {
@@ -13,6 +20,20 @@ module.exports = {
         } 
 
         message.channel.bulkDelete(ammount + 1)
-        .then(messages => console.log(`${messages.size - 1} message supprimés`));
+
+        .then(async messages => {         
+            const embed = new MessageEmbed()
+                .setTitle(`${messages.size -1} messages ont été supprimés.`)
+                .setColor(`${blue}`)
+            embedSent = await message.channel.send(embed);
+
+            await delay(3000) 
+
+            embedSent.delete();
+            
+        });
+
+        
+
     }
 };

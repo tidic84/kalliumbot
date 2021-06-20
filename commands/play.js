@@ -5,6 +5,7 @@ const ytSearch = require('yt-search');
 const message = require('../events/guild/message');
 const queue = new Map();
 var loop = false;
+var msgE;
 
 var list = [];
 
@@ -15,6 +16,12 @@ module.exports = {
 
     
     async execute(client, message, args, cmd) {
+
+        const embedSend = new MessageEmbed()
+                    .setTitle(`Recherche`)
+                    .setColor(`${yellow}`)
+                    .setDescription(`:arrows_counterclockwise: Recherche de la vidéo`)
+                    
 
         const voice_channel = message.member.voice.channel;
 
@@ -44,32 +51,30 @@ module.exports = {
             let song = {};
 
             if(ytdl.validateURL(args[0])) {
-                const embed1 = new MessageEmbed()
-                    .setTitle(`Recherche`)
-                    .setColor(`${yellow}`)
-                    .setDescription(`:arrows_counterclockwise: Recherche de la vidéo`)
-                message.channel.send(embed1);
-
-                const song_info = await ytdl.getInfo(args[0]);
-                song = { title: song_info.videoDetails.title, url: song_info.videoDetails.video_url, videoID: song_info.videoDetails.videoId}
                 
-                const embed = new MessageEmbed()
+                await message.channel.send(embedSend).then(async msg => {
+                    msgE = msg
+                    const song_info = await ytdl.getInfo(args[0]);
+                    song = { title: song_info.videoDetails.title, url: song_info.videoDetails.video_url, videoID: song_info.videoDetails.videoId}
+
+                })
+
+                embed = new MessageEmbed()
                     .setAuthor(`Chargement`)
                     .setTitle(`${song.title}`)
                     .setURL(`${song.url}`)
                     .setColor(`${yellow}`)
                     .setDescription(`:arrows_counterclockwise: Chargement de la vidéo`)
                     .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
-                message.channel.send(embed);
-                const connection = await message.member.voice.channel.join();
+                msgE.edit(embed);
                 
+                const connection = await message.member.voice.channel.join();
+
             } else {
                 const video_finder = async (query) => {
-                    const embed1 = new MessageEmbed()
-                        .setTitle(`Recherche`)
-                        .setColor(`${yellow}`)
-                        .setDescription(`:arrows_counterclockwise: Recherche de la vidéo`)
-                    message.channel.send(embed1);
+                    await message.channel.send(embedSend).then(async msg => {
+                        msgE = msg    
+                    })
 
                     const videoResult = await ytSearch(query);
                     return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
@@ -85,13 +90,13 @@ module.exports = {
                         .setColor(`${yellow}`)
                         .setDescription(`:arrows_counterclockwise: Chargement de la vidéo`)
                         .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
-                    message.channel.send(embed);
+                        msgE.edit(embed);
                 } else {
                     const embed = new MessageEmbed(receivedEmbed)
                         .setTitle(`Erreur`)
                         .setColor(`${red}`)
                         .setDescription(`:x: La vidéo est introuvable ou le lien est invalide`)
-                    message.channel.send(embed);
+                    msgE.edit(embed);
                 }
             }
 
@@ -129,7 +134,7 @@ module.exports = {
                         .setColor(`${green}`)
                         .setDescription(`:white_check_mark: Vidéo ajouté a la liste !`)
                         .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
-                    message.channel.send(embed);
+                    msgE.edit(embed);
             }
 
         }
@@ -174,7 +179,7 @@ const video_player = async (guild, song) => {
         .setColor(`${green}`)
         .setDescription(`:white_check_mark: Lecture de la vidéo`)
         .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
-    await song_queue.text_channel.send(embed);
+    await msgE.edit(embed);
     }
 }
 
