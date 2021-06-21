@@ -13,11 +13,11 @@ var list = [];
 
 module.exports = {
     name: 'play',
-    aliases: ['pl', 'stop', 'skip', 'sk', 'queue', 'list', 'loop'],
+    aliases: ['p', 'pl', 'stop', 'skip', 'sk', 'queue', 'list', 'loop'],
     description: 'Jouer de la musique',
 
     
-    async execute(client, message, args, cmd) {
+    async execute(client, message, settings, args, cmd) {
 
         const embedSend = new MessageEmbed()
                     .setTitle(`Recherche`)
@@ -33,7 +33,7 @@ module.exports = {
         const server_queue = queue.get(message.guild.id);
 
 
-        if(cmd == 'play' || cmd == 'pl') {
+        if(cmd == 'play' || cmd == 'pl',  cmd == 'p') {
             if(args == 0){
                 const embed = new MessageEmbed(receivedEmbed)
                     .setTitle(`Erreur`)

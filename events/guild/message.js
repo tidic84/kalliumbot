@@ -16,7 +16,7 @@ module.exports = async (Discord, client, message) => {
     if(command) {
 
         try {
-            command.execute(client, message, args, cmd, Discord, settings);
+            command.execute(client, message, settings, args, cmd, Discord);
         } catch (error) {
             console.error(error);
             const embed = new MessageEmbed()
