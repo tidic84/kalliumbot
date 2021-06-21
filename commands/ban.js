@@ -5,7 +5,7 @@ module.exports = {
     name: 'ban',
     description: 'Sert a bannir des joueurs du serveur',
     
-    async execute(client, message, args) {
+    async execute(client, message, settings, args) {
         if(!message.member.hasPermission('BAN_MEMBERS')) {
             const embed = new MessageEmbed()
                 .setTitle(`Erreur`)
@@ -32,7 +32,23 @@ module.exports = {
         }
 
         const reason = args.slice(1).join(' ') || "Aucune raison fournie";
-        await member.ban({reason})
+        try {
+            await member.ban({reason})
+            } catch (error) {
+                if (error == 'DiscordAPIError: Missing Permissions'){
+                    const embed = new MessageEmbed()
+                    .setTitle(`Erreur`)
+                    .setColor(`${red}`)
+                    .setDescription(`:x: Tu n'as pas les permission pour bannir ce membre`)
+                return message.channel.send(embed);
+                }
+                const embed = new MessageEmbed()
+                    .setTitle(`Erreur`)
+                    .setColor(`${red}`)
+                    .setDescription(`:x: Une erreur est survenue`)
+                    .setFooter(error)
+                return message.channel.send(embed);
+            }
         const embed = new MessageEmbed()
                 .setTitle(`Ban`)
                 .setColor(`${green}`)

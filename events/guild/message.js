@@ -3,11 +3,13 @@ const { blue, green, yellow, red } = require(`../../commands/colors.json`)
 const { prefix } = require(`../../config.js`)
 
 module.exports = async (Discord, client, message) => {
-    if(!message.content.startsWith(prefix) || message.author.bot) return;
 
     const settings = await client.getGuild(message.guild);
+
+    if(!message.content.startsWith(settings.prefix) || message.author.bot) return;
+
     
-    const args = message.content.slice(prefix.length).split(/ +/);
+    const args = message.content.slice(settings.prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
 
     const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
