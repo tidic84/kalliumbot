@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const { Guild } = require("../models/modelsIndex") 
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 module.exports = async (client) => {
 
@@ -11,8 +12,27 @@ module.exports = async (client) => {
 
     client.getGuild = async guild => {
         const data = await Guild.findOne({ guildID: guild.id});
-        if (data) return data;
-        return client.config.defaultSettings
+        if (data){
+             return data;
+
+        } else if (!data){
+            const newGuild = {
+                guildID: guild.id,
+                guildName: guild.name
+            };
+            client.createGuild(newGuild);
+    
+            return client.getGuild2(guild);
+        }
+        
+    }
+    client.getGuild2 = async guild => {
+        const data = await Guild.findOne({ guildID: guild.id});
+        if (data){
+             return data;
+        } else {
+            return client.getGuild(guild);;
+        }
     }
 
     client.updateGuild = async (guild, settings) => {
