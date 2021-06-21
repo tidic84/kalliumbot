@@ -5,7 +5,9 @@ const ytSearch = require('yt-search');
 const message = require('../events/guild/message');
 const queue = new Map();
 var loop = false;
+var skipped = false;
 var msgE;
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 var list = [];
 
@@ -114,7 +116,7 @@ module.exports = {
                 try {
                     const connection = await voice_channel.join();
                     queue_constructor.connection = connection;
-                    video_player(message.guild, queue_constructor.songs[0]);
+                    video_player(message.guild, queue_constructor.songs[0], message);
                 } catch (err) {
                     queue.delete(message.guild.id);
                     const embed = new MessageEmbed(receivedEmbed)
@@ -149,7 +151,7 @@ module.exports = {
     
 };
 
-const video_player = async (guild, song) => {
+const video_player = async (guild, song, message) => {
     const song_queue = queue.get(guild.id);
 
     if(!song) {
@@ -165,12 +167,11 @@ const video_player = async (guild, song) => {
             if(!loop){
                 list.shift();
             song_queue.songs.shift();
-            video_player(guild, song_queue.songs[0]);
+            video_player(guild, song_queue.songs[0], message);
             } else {
-                video_player(guild, song_queue.songs[0]);
+                video_player(guild, song_queue.songs[0], message);
             }
         });
-
         if (!loop) { 
         const embed = new MessageEmbed()
         .setAuthor(`Lecture`)
@@ -181,21 +182,50 @@ const video_player = async (guild, song) => {
         .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
     await msgE.edit(embed);
     }
+    if (skipped) { 
+        const embed = new MessageEmbed()
+        .setAuthor(`Lecture`)
+        .setTitle(`${song.title}`)
+        .setURL(`${song.url}`)
+        .setColor(`${green}`)
+        .setDescription(`:white_check_mark: Lecture de la vidéo`)
+        .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
+    await message.channel.send(embed);
+    }
 }
 
-const skip_song = (message, server_queue) => {
+const skip_song = async (message, server_queue) => {
     if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
     if(!server_queue){
         return message.channel.send(`There are no songs in queue 😔`);
     }
 
+    if (loop) {
+    loop_song(message, true);
+    skipped = true;
     const embed = new MessageEmbed()
         .setTitle(`Skip`)
         .setColor(`${blue}`)
         .setDescription(`:white_check_mark: Vous avez sauté une musique`)
     message.channel.send(embed);
 
-    server_queue.connection.dispatcher.end();
+    await server_queue.connection.dispatcher.end();
+    await delay(500)
+    skipped = false;
+    loop_song(message, true);
+    }
+    if (!loop) {
+        skipped = true;
+        const embed = new MessageEmbed()
+            .setTitle(`Skip`)
+            .setColor(`${blue}`)
+            .setDescription(`:white_check_mark: Vous avez sauté une musique`)
+        message.channel.send(embed);
+    
+        server_queue.connection.dispatcher.end();
+        await delay(500)
+        skipped = false;
+    }
 }
 
 const stop_song = (message, server_queue) => {
@@ -245,7 +275,6 @@ const queue_list = (message) => {
     msg = [];
     msgSend = "";
     for( i = 0; i < list.length; i++) {
-        //message.channel.send(list[i]);
         msg.push(`${i+1} - ${list[i]}\n`)
     
     }
@@ -253,8 +282,11 @@ const queue_list = (message) => {
         loopStatus = "activé";
     }
     msgSend = `${msg}`
+    
+    for (i = 0; i < msg.length; i++) {
     msgSend = msgSend.replace(",", "");
-    msgSend = msgSend.replace(",", "");
+    }
+
     const embed = new MessageEmbed()
         .setTitle(`Liste d'attente`)
         .setColor(`${blue}`)
@@ -264,9 +296,10 @@ const queue_list = (message) => {
     
 }
 
-const loop_song = (message) => {
+const loop_song = (message, skipped) => {
     if(!loop) {
         loop = true;
+        if(skipped)return;
         const embed = new MessageEmbed()
             .setTitle(`Boucle activé`)
             .setColor(`${green}`)
@@ -274,6 +307,7 @@ const loop_song = (message) => {
         message.channel.send(embed);
     } else {
         loop = false;
+        if(skipped)return;
         const embed = new MessageEmbed()
             .setTitle(`Boucle désactivé`)
             .setColor(`${green}`)

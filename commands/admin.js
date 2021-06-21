@@ -1,3 +1,4 @@
+// Commande a ne pas utiliser, ne marche que sur mon serveur
 
 module.exports = {
     name: "admin",

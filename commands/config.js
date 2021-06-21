@@ -2,12 +2,12 @@ const { MessageEmbed } = require('discord.js');
 const { blue, green, yellow, red } = require('./colors.json')
 
 module.exports = {
-    name: 'template',
-    description: 'template',
+    name: 'config',
+    description: 'config',
     
-    execute(client, message) {
+    execute(client, message, settings) {
         const embed = new MessageEmbed()
-            .setTitle('Pong !')
+            .setTitle(`Prefix actuel: \`${settings.prefix}\``)
             .setColor(`${blue}`)
         message.channel.send(embed);
     }
