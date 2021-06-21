@@ -18,6 +18,5 @@ module.exports = {
                 .setFooter(`Created: ${message.guild.createdAt}`)
         message.channel.send(embed);
         
-        //message.channel.send(`Nom du serveur: ${message.guild.name}\nNombre d'utilisateurs: ${message.guild.memberCount}`)
     }
 };
