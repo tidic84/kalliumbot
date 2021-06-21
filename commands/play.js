@@ -33,7 +33,7 @@ module.exports = {
         const server_queue = queue.get(message.guild.id);
 
 
-        if(cmd == 'play' || cmd == 'pl',  cmd == 'p') {
+        if(cmd == 'play' || cmd == 'pl' || cmd == 'p') {
             if(args == 0){
                 const embed = new MessageEmbed(receivedEmbed)
                     .setTitle(`Erreur`)
