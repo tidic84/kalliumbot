@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const { blue, green, yellow, red } = require(`../../commands/colors.json`)
+const { blue, green, yellow, red } = require(`../../colors.json`)
 const { prefix } = require(`../../config.js`)
 
 module.exports = async (Discord, client, message) => {

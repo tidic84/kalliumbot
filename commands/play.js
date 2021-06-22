@@ -1,4 +1,4 @@
-const { blue, green, yellow, red } = require(`./colors.json`)
+const { blue, green, yellow, red } = require(`../colors.json`)
 const { MessageEmbed } = require('discord.js');
 const ytdl = require("ytdl-core");
 const ytSearch = require('yt-search');
@@ -59,6 +59,8 @@ module.exports = {
                     const song_info = await ytdl.getInfo(args[0]);
                     song = { title: song_info.videoDetails.title, url: song_info.videoDetails.video_url, videoID: song_info.videoDetails.videoId}
 
+                }).catch(error =>{
+                    console.log(error)
                 })
 
                 embed = new MessageEmbed()
@@ -68,7 +70,9 @@ module.exports = {
                     .setColor(`${yellow}`)
                     .setDescription(`:arrows_counterclockwise: Chargement de la vidéo`)
                     .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
-                msgE.edit(embed);
+                msgE.edit(embed).catch(error => {
+                    console.log(error)
+                });
                 
                 const connection = await message.member.voice.channel.join();
 
@@ -142,7 +146,14 @@ module.exports = {
         }
 
         else if(cmd == 'stop') stop_song(message, server_queue);
-        else if(cmd == 'skip' || cmd == 'sk') skip_song(message, server_queue);
+        else if(cmd == 'skip' || cmd == 'sk') {
+            try {
+                skip_song(message, server_queue);
+            } catch (error) {
+                console.log(error)
+                message.reply(error)
+            }
+        }
         else if(cmd == 'queue' || cmd == 'list') queue_list(message, server_queue);
         else if(cmd == 'loop') loop_song(message);
 

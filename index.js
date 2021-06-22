@@ -14,10 +14,6 @@ client.commands = new Discord.Collection();
     require(`./handlers/${handler}`)(client, Discord);
 })
 
-client.once('ready', () => {
-    client.user.setActivity('Kallium', { type: 'WATCHING', url: 'https://twitch.tv/'});
-});
-
 mongoose.connect(MONGODB_SRV, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

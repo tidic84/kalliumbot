@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
-const { blue, green, yellow, red } = require('./colors.json')
-const helpCommands = [ 'kick', 'ban', 'help', 'clear', 'play', 'skip', 'stop', 'queue', 'avatar', 'avatar-gif'];
+const { blue, green, yellow, red } = require('../colors.json')
+const helpCommands = [ 'kick', 'ban', 'help', 'clear', 'play', 'skip', 'stop', 'queue', 'avatar'];
 
 module.exports = {
     name: 'help',
@@ -28,8 +28,7 @@ module.exports = {
             ・\`queue\` Affiche la liste d'attente des musiques
 
             **__Autre__**
-            ・\`avatar <@joueur>\` Sert a obtenir l'avatar ou celle d'un ou plusieurs joueur(s).
-            ・\`avatar-gif <@joueur>\` Sert a obtenir l'avatar gif ou celle d'un ou plusieurs joueur(s).`)
+            ・\`avatar <@joueur>\` Sert a obtenir l'avatar ou celle d'un ou plusieurs joueur(s).`)
             .setFooter("Pour plus de détails sur une commande: help <commande>")
         message.channel.send(embed);
         
@@ -166,23 +165,6 @@ module.exports = {
                     message.channel.send(embed1);
                     
                     }
-                    if(args[0] == 'avatar-gif') {
-                        const embed1 = new MessageEmbed()
-                            .setTitle('Help - Avatar Gif')
-                            .setColor(`${blue}`)
-                            .setDescription(`__**Avatar Gif**__
-    
-                            ・avatar-gif | <@joueur>
-                            
-                            La mention du joueur est facultative, si personne n'est mentionné, c'est l'avatar en gif de l'auteur de la commmande qui sera envoyé.
-                            Une ou plusieurs mentions peuvent être mise.
-                            
-                            ・Alias: \`pp-gif\`, \`ppg\`, \`pp-g\`, \`avatarg\`
-                            `)
-                            .setFooter("Pour plus de détails sur une commande: help <commande>")
-                        message.channel.send(embed1);
-                        
-                        }
 
                 } else {
                     i++

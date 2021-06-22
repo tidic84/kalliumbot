@@ -7,20 +7,16 @@ module.exports = async (Discord, client, member) => {
     month = today.toLocaleString('fr-FR', { month: 'long' })
     var date = today.getDate()+' '+month+' '+ today.getFullYear()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-    // AutoRole
-    let welcomeRole = member.guild.roles.cache.find(role => role.name === '👤・Membres');
-    member.roles.add(welcomeRole)
-
-    // Join Message
+    // Leave Message
     const channel = client.channels.cache.get(settings.welcomeChannel);
-    let msg = settings.welcomeMessage;
-    if (msg.includes("{{USER}}")) msg = await msg.replace("{{USER}}", member);
+    let msg = settings.leaveMessage;
+    if (msg.includes("{{USER}}")) msg = await msg.replace("{{USER}}", member.displayName);
     if (msg.includes("{{SERVER_NAME}}")) msg = await msg.replace("{{SERVER_NAME}}", member.guild);
     const embed = new MessageEmbed()
-        .setTitle('Heyy !!')
+        .setTitle('Bye...')
         .setDescription(msg)
         .setImage(member.user.displayAvatarURL({ dynamic : true}))
-        .setColor(`${blue}`)
+        .setColor(`${red}`)
         .setFooter(date)
     try {
     channel.send(embed)

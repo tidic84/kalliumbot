@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const { blue, green, yellow, red } = require('./colors.json')
+const { blue, green, yellow, red } = require('../colors.json')
 
 module.exports = {
     name: 'avatar',
@@ -11,7 +11,7 @@ module.exports = {
             const embed = new MessageEmbed()
                 .setTitle(`${message.author.username}`)
                 .setColor(`${blue}`)
-                .setImage(`${message.author.displayAvatarURL({ format : 'png'})}`)
+                .setImage(`${message.author.displayAvatarURL({ dynamic : true })}`)
             message.channel.send(embed);
         
         }
@@ -20,7 +20,7 @@ module.exports = {
             const embed = new MessageEmbed()
                 .setTitle(`${user.username}`)
                 .setColor(`${blue}`)
-                .setImage(`${user.displayAvatarURL({ format : 'png'})}`)
+                .setImage(`${user.displayAvatarURL({ dynamic : true })}`)
             message.channel.send(embed);
 
         });

@@ -41,8 +41,10 @@ module.exports = async (client) => {
         for (const key in settings) {
             if (data[key] !== settings[key]) data[key] = settings[key];
         }
-
-        return data.updateOne(settings);
+        console.log(settings);
+        return data.updateOne(settings).catch(error => {
+            console.log(error);
+        })
 
     }
 };
