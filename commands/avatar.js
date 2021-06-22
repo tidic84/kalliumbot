@@ -4,7 +4,7 @@ const { blue, green, yellow, red } = require('../colors.json')
 module.exports = {
     name: 'avatar',
     description: 'Afficher avatar',
-    aliases: [ 'pp' ],
+    aliases: [ 'pp', 'pdp' ],
     
     execute(client, message) {
         if (!message.mentions.users.size) {

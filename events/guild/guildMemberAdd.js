@@ -8,9 +8,12 @@ module.exports = async (Discord, client, member) => {
     var date = today.getDate()+' '+month+' '+ today.getFullYear()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
     // AutoRole
-    let welcomeRole = member.guild.roles.cache.find(role => role.name === '👤・Membres');
-    member.roles.add(welcomeRole)
-
+    for(i = 0; i< settings.welcomeRole.length; i++){
+        let WelcomeRole = member.guild.roles.cache.find(role => role.id == settings.welcomeRole[i]);
+        member.roles.add(WelcomeRole)    
+    }
+    
+    
     // Join Message
     const channel = client.channels.cache.get(settings.welcomeChannel);
     let msg = settings.welcomeMessage;

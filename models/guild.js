@@ -21,6 +21,10 @@ const guildSchema = mongoose.Schema({
     welcomeChannel: {
         "type": String,
         "default": "undefined"
+    },
+    welcomeRole: {
+        "type": Array,
+        "default": ["undefined"]
     }
 });
 
