@@ -5,6 +5,7 @@ const { prefix } = require(`../../config.js`)
 module.exports = async (Discord, client, message) => {
 
     const settings = await client.getGuild(message.guild);
+    const profileData = await client.getProfile(message.member);
 
     if(!message.content.startsWith(settings.prefix) || message.author.bot) return;
 
@@ -18,7 +19,7 @@ module.exports = async (Discord, client, message) => {
     if(command) {
 
         try {
-            command.execute(client, message, settings, args, cmd, Discord);
+            command.execute(client, message, settings, args, cmd, profileData, Discord);
         } catch (error) {
             console.error(error);
             const embed = new MessageEmbed()

@@ -5,7 +5,8 @@ module.exports = {
     name: 'template',
     description: 'template',
     
-    execute(client, message) {
+    async execute(client, message, settings, args) { 
+
         const embed = new MessageEmbed()
             .setTitle('Pong !')
             .setColor(`${blue}`)

@@ -14,14 +14,15 @@ client.commands = new Discord.Collection();
     require(`./handlers/${handler}`)(client, Discord);
 })
 
+client.login(token);
+
 mongoose.connect(MONGODB_SRV, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
-}).then(()=>{
-    console.log("Connected to the database")
 }).catch((error) => {
     console.log(error)
+}).then(()=>{
+    console.log("Connected to the database")
 });
 
-client.login(token);

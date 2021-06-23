@@ -28,8 +28,14 @@ module.exports = {
                     if(args[1] == "reset") {
                         message.channel.send(`Nouvelle valeur: \`${defaults.welcomeChannel}\``);
                         return client.updateGuild(message.guild, { welcomeChannel: defaults.welcomeChannel});
-                    }                await client.updateGuild(message.guild, { welcomeChannel: newSetting});
-                return message.channel.send(`Le salon de bienvenue est désormais: \`${newSetting}\``)
+                    }
+                const welcomeChannelStr = newSetting
+                    .toString()
+                    .replace("<", "")
+                    .replace(">", "")
+                    .replace("#", "");
+                await client.updateGuild(message.guild, { welcomeChannel: welcomeChannelStr});
+                return message.channel.send(`Le salon de bienvenue est désormais: \`${welcomeChannelStr}\``)
                 } else {
                     message.channel.send(`Le salon de bienvenue est: \`${settings.welcomeChannel}\``);
                     break;
@@ -66,15 +72,10 @@ module.exports = {
                         return client.updateGuild(message.guild, { welcomeRole: defaults.welcomeRole});
                     }
                 const roleList = [];
-                // const rList = await args.slice(1).map( arg => {
-                //     console.log(arg)
-                //     roleList.push(arg)
-                // })
-                // console.log(roleList)
                 const rList = await message.mentions.roles.map(role => {
-                    role.toString().replace("<", "")
-                    role.toString().replace(">", "")
-                    role.toString().replace("@", "")
+                    // role.toString().replace("<", "")
+                    // role.toString().replace(">", "")
+                    // role.toString().replace("@", "")
                     roleList.push(role)
                 })
 
@@ -86,9 +87,5 @@ module.exports = {
                 }
             }
         }
-        // const embed = new MessageEmbed()
-        //     .setTitle(`Prefix actuel: \`${settings.prefix}\``)
-        //     .setColor(`${blue}`)
-        // message.channel.send(embed);
     }
 };
