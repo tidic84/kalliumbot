@@ -3,10 +3,19 @@ const { blue, green, yellow, red } = require('../colors.json')
 
 module.exports = {
     name: 'add-money',
+    aliases: ["add", "am", "addm", "add-m"],
     description: 'Ajoute de la money',
     
     async execute(client, message, settings, args, cmd, profileData) { 
         var total = "";
+
+        if(message.mentions.users.first().bot){
+            const embed = new MessageEmbed()
+                .setTitle('Erreur')
+                .setDescription(` **${args[0]}** est un bot`)
+                .setColor(`${red}`)
+            return message.channel.send(embed);
+        }
 // ADD WALLET
 
         if(args[2] == "bank") {
@@ -18,6 +27,7 @@ module.exports = {
                     .setColor(`${red}`)
                 return message.channel.send(embed);
             }
+            
             if(isNaN(total)){
                 const embed = new MessageEmbed()
                     .setTitle('Erreur')

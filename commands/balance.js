@@ -25,6 +25,13 @@ module.exports = {
             } else {
             var profileDataMention = "";
             const userMention = message.mentions.users.map(async user => {
+                if(message.mentions.users.first().bot){
+                    const embed = new MessageEmbed()
+                        .setTitle('Erreur')
+                        .setDescription(` **${args[0]}** est un bot`)
+                        .setColor(`${red}`)
+                    return message.channel.send(embed);
+                }
                 profileDataMention = await client.getProfile(user, message.guild.id);
                 await delay(50)
                 profileDataMention = await client.getProfile(user, message.guild.id);

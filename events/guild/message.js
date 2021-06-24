@@ -5,7 +5,12 @@ const { prefix } = require(`../../config.js`)
 module.exports = async (Discord, client, message) => {
 
     const settings = await client.getGuild(message.guild);
-    const profileData = await client.getProfile(message.member);
+    let profileData = "";
+    if (message.member.user.bot){
+        return
+    }else {
+        profileData = await client.getProfile(message.member)
+    };
 
     if(!message.content.startsWith(settings.prefix) || message.author.bot) return;
 

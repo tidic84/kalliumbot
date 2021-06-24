@@ -8,6 +8,14 @@ module.exports = {
     async execute(client, message, settings, args, cmd, profileData) { 
         var total = "";
 
+        if(message.mentions.users.first().bot){
+            const embed = new MessageEmbed()
+                .setTitle('Erreur')
+                .setDescription(` **${args[0]}** est un bot`)
+                .setColor(`${red}`)
+            return message.channel.send(embed);
+        }
+        
 // SI BANK
 
         if(args[2] == "bank") {
