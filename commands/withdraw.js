@@ -29,7 +29,7 @@ module.exports = {
 
             const embed = new MessageEmbed()
                 .setTitle('Retrait réussi')
-                .setDescription(`${settings.currency} ${profileData.bank} ont été retirés avec succès.`)
+                .setDescription(`${settings.currency} ${client.separator(profileData.bank)} ont été retirés avec succès.`)
                 .setColor(`${green}`)
             message.channel.send(embed);
 
@@ -48,7 +48,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setTitle('Retrait réussi')
-            .setDescription(`${settings.currency} ${args[0]} ont été retirés avec succès.`)
+            .setDescription(`${settings.currency} ${client.separator(args[0])} ont été retirés avec succès.`)
             .setColor(`${green}`)
         message.channel.send(embed);
     }
