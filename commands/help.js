@@ -1,13 +1,11 @@
 const { MessageEmbed } = require('discord.js');
 const { blue, green, yellow, red } = require('../colors.json')
-const helpCommands = [ 'kick', 'ban', 'help', 'clear', 'play', 'skip', 'stop', 'queue', 'avatar'];
 
 module.exports = {
     name: 'help',
     description: 'Affiche la liste des commandes',
     
-    execute(client, message, args) {
-        
+    execute(client, message, settings, args) {
         if (args[0] == null) {
         const embed = new MessageEmbed()
             .setTitle('Liste des commandes')
@@ -15,11 +13,12 @@ module.exports = {
             .setDescription(`__**Modération**__
             ・\`kick <@joueur> <raison>\`: Sert a expulser un membre du serveur.
             ・\`ban <@joueur> <raison>\`: Sert a bannir définitivement un joueur du serveur.
-            
+
             __**Utilitaires**__
             ・\`server\`: Afficher les informations du serveur.
             ・\`help\`: Afficher la liste des commandes.
             ・\`clear <nombre entre 0 et 100>\`: Sert a supprimer des messages.
+            ・\`config <valeur> <nouvelle valeur>\` Affiche ou modifie des paramètres
 
             __**Musique**__
             ・\`play <lien / nom de vidéo>\` Sert a jouer une musique dans un salon vocal.
@@ -27,18 +26,27 @@ module.exports = {
             ・\`stop\` Arrête la musique.
             ・\`queue\` Affiche la liste d'attente des musiques
 
+            __**Economie**__
+            ・\`work\` Te fais gagner de l'argent en travaillant
+            ・\`deposit <amount/all>\` Dépose de l'argent a la banque
+            ・\`withdraw <amount/all>\` Retire de l'argent a la banque
+            ・\`pay <@joueur> <amount/all>\` Transfère de l'argent a un membre
+            ・\`add-money <@joueur> <amount> <wallet/bank>\` Ajoute de l'argent a un joueur
+            ・\`set-money <@joueur> <amount> <wallet/bank>\` Définit l'argent d'un joueur
+
             **__Autre__**
-            ・\`avatar <@joueur>\` Sert a obtenir l'avatar ou celle d'un ou plusieurs joueur(s).`)
+            ・\`avatar <@joueur>\` Sert a obtenir l'avatar ou celle d'un ou plusieurs joueur(s).
+            ・\`embed <#salon> <titre> <texte>\` Envoie un embed personnalisé
+            ・\`anime <nom d'animé>\` Donne des informations sur un animé`)
+            
             .setFooter("Pour plus de détails sur une commande: help <commande>")
         message.channel.send(embed);
         
         } else {
-            fail = 0;
-            for (let i = 0; i <= helpCommands.length; i) {
-            if (args[0] == helpCommands[i]) {
-                    i++
-                    if(args[0] == 'ban') {
-                        const embed1 = new MessageEmbed()
+            switch(args[0]) {
+                
+                case"ban":{
+                    const embed1 = new MessageEmbed()
                             .setTitle('Help - Ban')
                             .setColor(`${blue}`)
                             .setDescription(`__**Ban**__
@@ -49,9 +57,9 @@ module.exports = {
                             La raison est facultative
                             `)
                             .setFooter("Pour plus de détails sur une commande: help <commande>")
-                        message.channel.send(embed1);
-                    }
-                    if(args[0] == 'kick') {
+                        return message.channel.send(embed1);
+                }
+                case"kick": {
                     const embed1 = new MessageEmbed()
                         .setTitle('Help - Kick')
                         .setColor(`${blue}`)
@@ -63,12 +71,10 @@ module.exports = {
                         La raison est facultative
                         `)
                         .setFooter("Pour plus de détails sur une commande: help <commande>")
-                    message.channel.send(embed1);
-                    
-                    }
-
-                    if(args[0] == 'clear') {
-                        const embed1 = new MessageEmbed()
+                    return message.channel.send(embed1);
+                }
+                case"clear": {
+                    const embed1 = new MessageEmbed()
                             .setTitle('Help - Clear')
                             .setColor(`${blue}`)
                             .setDescription(`__**Clear**__
@@ -78,12 +84,10 @@ module.exports = {
                             Le nombre de message doit etre compris entre 0 et 100
                             `)
                             .setFooter("Pour plus de détails sur une commande: help <commande>")
-                        message.channel.send(embed1);
-                        
-                    }
-
-                    if(args[0] == 'play') {
-                        const embed1 = new MessageEmbed()
+                        return message.channel.send(embed1);
+                }
+                case"play": {
+                    const embed1 = new MessageEmbed()
                             .setTitle('Help - Play')
                             .setColor(`${blue}`)
                             .setDescription(`__**Play**__
@@ -95,11 +99,10 @@ module.exports = {
                             ・Alias: \`pl\`
                             `)
                             .setFooter("Pour plus de détails sur une commande: help <commande>")
-                        message.channel.send(embed1);
-                        
-                        }
-                    if(args[0] == 'skip') {
-                        const embed1 = new MessageEmbed()
+                        return message.channel.send(embed1);
+                }
+                case"skip": {
+                    const embed1 = new MessageEmbed()
                             .setTitle('Help - Skip')
                             .setColor(`${blue}`)
                             .setDescription(`__**Skip**__
@@ -111,12 +114,10 @@ module.exports = {
                             ・Alias: \`sk\`
                             `)
                             .setFooter("Pour plus de détails sur une commande: help <commande>")
-                        message.channel.send(embed1);
-                        
-                        }
-
-                        if(args[0] == 'stop') {
-                            const embed1 = new MessageEmbed()
+                        return message.channel.send(embed1);
+                }
+                case"stop": {
+                    const embed1 = new MessageEmbed()
                                 .setTitle('Help - Stop')
                                 .setColor(`${blue}`)
                                 .setDescription(`__**Stop**__
@@ -127,12 +128,10 @@ module.exports = {
     
                                 `)
                                 .setFooter("Pour plus de détails sur une commande: help <commande>")
-                            message.channel.send(embed1);
-                            
-                            }
-                        
-                        if(args[0] == 'queue') {
-                        const embed1 = new MessageEmbed()
+                            return message.channel.send(embed1);
+                }
+                case"queue": {
+                    const embed1 = new MessageEmbed()
                             .setTitle('Help - Queue')
                             .setColor(`${blue}`)
                             .setDescription(`__**Queue**__
@@ -144,11 +143,9 @@ module.exports = {
                             ・Alias: \`list\`
                             `)
                             .setFooter("Pour plus de détails sur une commande: help <commande>")
-                        message.channel.send(embed1);
-                        
-                        }
-                    
-                    if(args[0] == 'avatar') {
+                        return message.channel.send(embed1);
+                }
+                case"avatar": {
                     const embed1 = new MessageEmbed()
                         .setTitle('Help - Avatar')
                         .setColor(`${blue}`)
@@ -162,27 +159,19 @@ module.exports = {
                         ・Alias: \`pp\`
                         `)
                         .setFooter("Pour plus de détails sur une commande: help <commande>")
-                    message.channel.send(embed1);
-                    
-                    }
-
-                } else {
-                    i++
-                    fail++
-                    if (fail - 1 == helpCommands.length) {
-                            const embed = new MessageEmbed()
-                                .setTitle('Inexistante')
-                                .setColor(`${blue}`)
-                                .setDescription(`:x: Cette commande est inexistante ou n'a pas plus de détails !`)
-                                .setFooter("Pour plus de détails sur une commande: help <commande>")
-                            return message.channel.send(embed);
-                    }
+                    return message.channel.send(embed1);
                 }
 
             }
-        }
-        
-    }
 
+            const embed = new MessageEmbed()
+                .setTitle('Inexistante')
+                .setColor(`${blue}`)
+                .setDescription(`:x: Cette commande est inexistante ou n'a pas plus de détails !`)
+                .setFooter("Pour plus de détails sur une commande: help <commande>")
+            return message.channel.send(embed);
+
+        }
+    }
 };
 
