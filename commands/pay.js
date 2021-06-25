@@ -10,14 +10,6 @@ module.exports = {
         var amount = args[1];
         var amountAuthor = "";
         var amountTarget = "";
-        // Si le membre mentionné est un bot
-        if(message.mentions.users.first().bot){
-            const embed = new MessageEmbed()
-                .setTitle('Erreur')
-                .setDescription(` **${args[0]}** est un bot`)
-                .setColor(`${red}`)
-            return message.channel.send(embed);
-        }
 
         // Si il n'y a pas de mention
         if(!message.mentions.users.size){
@@ -27,6 +19,15 @@ module.exports = {
                     .setColor(`${red}`)
                 return message.channel.send(embed);
             }
+        // Si le membre mentionné est un bot
+        if(message.mentions.users.first().bot){
+            const embed = new MessageEmbed()
+                .setTitle('Erreur')
+                .setDescription(` **${args[0]}** est un bot`)
+                .setColor(`${red}`)
+            return message.channel.send(embed);
+        }
+
             var profileDataMention = await client.getProfile(message.mentions.users.first(), message.member.guild.id)
 
 
@@ -53,7 +54,7 @@ module.exports = {
                 amountTarget = parseInt(profileDataMention.coins) + parseInt(profileData.coins)
     
                 const embed = new MessageEmbed()
-                    .setTitle('Payement réussi')
+                    .setAuthor(message.member.displayName, message.author.displayAvatarURL({ dynamic : true }))
                     .setDescription(`${settings.currency} ${profileData.coins} ont été payés avec succès.`)
                     .setColor(`${green}`)
                 message.channel.send(embed);
@@ -76,7 +77,7 @@ module.exports = {
             client.updateProfile(message.mentions.users.first(), { coins: amountTarget}, message.member.guild.id)
     
             const embed = new MessageEmbed()
-                .setTitle('Ajout réussi')
+                .setAuthor(message.member.displayName, message.author.displayAvatarURL({ dynamic : true }))
                 .setDescription(` ${settings.currency} ${args[1]} on été ajouté au porte feuille de ${message.mentions.users.first().username}.`)
                 .setColor(`${green}`)
             message.channel.send(embed);

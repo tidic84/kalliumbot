@@ -28,7 +28,7 @@ module.exports = {
             amountB = 0
 
             const embed = new MessageEmbed()
-                .setTitle('Retrait réussi')
+                .setAuthor(message.member.displayName, message.author.displayAvatarURL({ dynamic : true }))
                 .setDescription(`${settings.currency} ${client.separator(profileData.bank)} ont été retirés avec succès.`)
                 .setColor(`${green}`)
             message.channel.send(embed);
@@ -47,7 +47,7 @@ module.exports = {
         client.updateProfile(message.author, { coins: amountW, bank: amountB}, message.member.guild.id)
 
         const embed = new MessageEmbed()
-            .setTitle('Retrait réussi')
+            .setAuthor(message.member.displayName, message.author.displayAvatarURL({ dynamic : true }))
             .setDescription(`${settings.currency} ${client.separator(args[0])} ont été retirés avec succès.`)
             .setColor(`${green}`)
         message.channel.send(embed);

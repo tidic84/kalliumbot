@@ -3,6 +3,7 @@ const { blue, green, yellow, red } = require('../colors.json')
 
 module.exports = {
     name: 'test',
+    cooldown: 5,
     description: 'template',
     
     async execute(client, message, settings, args) { 

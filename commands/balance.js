@@ -12,7 +12,7 @@ module.exports = {
 
         if (!message.mentions.users.size){
             const embed = new MessageEmbed()
-                .setTitle(`${message.member.displayName}'s Balance `)
+                .setTitle(`:scales: ${message.member.displayName}'s Balance `)
                 .setThumbnail(`${message.author.displayAvatarURL({ dynamic : true})}`)
                 .setColor(`${blue}`)
                 .addFields(

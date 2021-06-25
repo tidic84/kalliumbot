@@ -38,7 +38,7 @@ module.exports = {
             client.updateProfile(message.mentions.users.first(), { bank: total}, message.member.guild.id )
     
             const embed = new MessageEmbed()
-                .setTitle('Ajout réussi')
+                .setAuthor(message.member.displayName, message.author.displayAvatarURL({ dynamic : true }))
                 .setDescription(` ${settings.currency} ${client.separator(args[1])} on été ajouté au compte banquaire de ${message.mentions.users.first().username}.`)
                 .setColor(`${green}`)
             message.channel.send(embed);
@@ -64,7 +64,7 @@ module.exports = {
             client.updateProfile(message.mentions.users.first(), { coins: total}, message.member.guild.id )
     
             const embed = new MessageEmbed()
-                .setTitle('Ajout réussi')
+                .setAuthor(message.member.displayName, message.author.displayAvatarURL({ dynamic : true }))
                 .setDescription(` ${settings.currency} ${client.separator(args[1])} on été ajouté au porte feuille de ${message.mentions.users.first().username}.`)
                 .setColor(`${green}`)
             message.channel.send(embed);
