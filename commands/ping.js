@@ -19,7 +19,10 @@ module.exports = {
             .setDescription(`Latence du bot: \`${msg.createdTimestamp - message.createdTimestamp}ms\`
             Latence de l'API: \`${Math.round(client.ws.ping)}ms\``)
             .setColor(`${blue}`)
-        msg.edit(embed2);
+
+        msg.edit({embed: embed2}).catch(error => {
+            console.log(error)
+        })
         
     }
 };

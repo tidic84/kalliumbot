@@ -38,7 +38,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setTitle('Ajout réussi')
-            .setDescription(` ${message.mentions.users.first().username} a désormais $${args[1]} dans son compte banquaire`)
+            .setDescription(` ${message.mentions.users.first().username} a désormais ${settings.currency} ${args[1]} dans son compte banquaire`)
             .setColor(`${green}`)
         message.channel.send(embed);
 
@@ -65,7 +65,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setTitle('Ajout réussi')
-            .setDescription(` ${message.mentions.users.first().username} a désormais $${args[1]} dans son porte feuille.`)
+            .setDescription(` ${message.mentions.users.first().username} a désormais ${settings.currency} ${args[1]} dans son porte feuille.`)
             .setColor(`${green}`)
         message.channel.send(embed);
         }

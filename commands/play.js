@@ -70,7 +70,7 @@ module.exports = {
                     .setColor(`${yellow}`)
                     .setDescription(`:arrows_counterclockwise: Chargement de la vidéo`)
                     .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
-                msgE.edit(embed).catch(error => {
+                msgE.edit({embed: embed}).catch(error => {
                     console.log(error)
                 });
                 
@@ -96,13 +96,13 @@ module.exports = {
                         .setColor(`${yellow}`)
                         .setDescription(`:arrows_counterclockwise: Chargement de la vidéo`)
                         .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
-                        msgE.edit(embed);
+                        msgE.edit({embed: embed});
                 } else {
                     const embed = new MessageEmbed(receivedEmbed)
                         .setTitle(`Erreur`)
                         .setColor(`${red}`)
                         .setDescription(`:x: La vidéo est introuvable ou le lien est invalide`)
-                    msgE.edit(embed);
+                    msgE.edit({embed: embed});
                 }
             }
 
@@ -140,7 +140,7 @@ module.exports = {
                         .setColor(`${green}`)
                         .setDescription(`:white_check_mark: Vidéo ajouté a la liste !`)
                         .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
-                    msgE.edit(embed);
+                    msgE.edit({embed: embed});
             }
 
         }
@@ -191,7 +191,7 @@ const video_player = async (guild, song, message) => {
         .setColor(`${green}`)
         .setDescription(`:white_check_mark: Lecture de la vidéo`)
         .setThumbnail(`https://img.youtube.com/vi/${song.videoID}/maxresdefault.jpg`)
-    await msgE.edit(embed);
+    await msgE.edit({embed: embed});
     }
     if (skipped) { 
         const embed = new MessageEmbed()

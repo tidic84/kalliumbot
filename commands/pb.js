@@ -35,7 +35,7 @@ module.exports = {
             const embed2 = new MessageEmbed(receivedEmbed)
                 .setDescription(`|${step[i]}|`)
             await delay(500)
-            msg.edit(embed2);
+            msg.edit({embed: embed2});
         }
 
     }

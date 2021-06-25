@@ -23,6 +23,18 @@ module.exports = {
                     break;
                 }
             }
+            case"currency": {
+                if(newSetting){
+                    if(args[1] == "reset") {
+                        message.channel.send(`Nouvelle valeur: \`${defaults.currency}\``);
+                        return client.updateGuild(message.guild, { currency: defaults.currency});
+                    }                await client.updateGuild(message.guild, { currency: newSetting});
+                return message.channel.send(`Le préfix est désormais \`${newSetting}\``)
+                } else {
+                    message.channel.send(`Prefix actuel: \`${settings.currency}\``);
+                    break;
+                }
+            }
             case"welcome-channel": {
                 if(newSetting){
                     if(args[1] == "reset") {

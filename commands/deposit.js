@@ -29,7 +29,7 @@ module.exports = {
 
             const embed = new MessageEmbed()
                 .setTitle('Dépot réussi')
-                .setDescription(`$${profileData.coins} ont été déposés avec succès.`)
+                .setDescription(`${settings.currency} ${profileData.coins} ont été déposés avec succès.`)
                 .setColor(`${green}`)
             message.channel.send(embed);
 
@@ -48,7 +48,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setTitle('Retrait réussi')
-            .setDescription(`$${args[0]} ont été déposés avec succès.`)
+            .setDescription(`${settings.currency} ${args[0]} ont été déposés avec succès.`)
             .setColor(`${green}`)
         message.channel.send(embed);
     }

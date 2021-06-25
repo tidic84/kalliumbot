@@ -10,6 +10,10 @@ const guildSchema = mongoose.Schema({
         "type": String,
         "default": defaults.prefix
     },
+    currency: {
+        "type": String,
+        "default": defaults.currency
+    },
     leaveMessage: {
         "type": String,
         "default": defaults.leaveMessage
