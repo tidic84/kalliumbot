@@ -39,12 +39,12 @@ module.exports = {
                     b.defer()
                     if(b.id === "depAll") {
                         command = client.commands.get("deposit");
-                        command.execute(client, message, "undefined", ["all"], "undefined", profileData, Discord);
+                        command.execute(client, message, settings, ["all"], "undefined", profileData, Discord);
                         collector.stop()
                     }
                     if(b.id === "withAll") {
                         command = client.commands.get("withdraw");
-                        command.execute(client, message, "undefined", ["all"], "undefined", profileData, Discord);
+                        command.execute(client, message, settings, ["all"], "undefined", profileData, Discord);
                         collector.stop()
                         
                     }
