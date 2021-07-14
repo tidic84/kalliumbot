@@ -5,7 +5,6 @@ require('./util/functions')(client);
 
 const mongoose = require("mongoose");
 
-const { token , MONGODB_SRV} = require('./config');
 require('discord-buttons')(client) ;
 
 client.commands = new Discord.Collection();
@@ -14,9 +13,9 @@ client.commands = new Discord.Collection();
     require(`./handlers/${handler}`)(client, Discord);
 })
 
-client.login(token);
+client.login(process.env.TOKEN);
 
-mongoose.connect(MONGODB_SRV, {
+mongoose.connect(process.env.MONGODB_SRV, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
